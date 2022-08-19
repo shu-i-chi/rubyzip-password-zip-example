@@ -2,4 +2,8 @@
 
 source "https://rubygems.org"
 
-# gem "rails"
+gem "rubyzip", "~> 2.3"
+
+group :development do
+  gem "yard", "~> 0.9"
+end
