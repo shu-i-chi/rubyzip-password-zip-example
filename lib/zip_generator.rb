@@ -7,7 +7,7 @@ require_relative "zip_generator/file_entry"
 
 # ZIPファイル生成処理を扱うモジュールです。
 module ZipGenerator
-  # ZIPファイルを作成します。オプション引数でパスワードを渡すと、パスワード付きZIPファイルを作成します
+  # ZIPファイルを新規作成します。オプション引数でパスワードを渡すと、パスワード付きZIPファイルを新規作成します
   #
   # ZIPファイルに収録するエントリー名（つまり、ZIPファイル展開後のファイル名）は、パスのうちファイル名の部分（basename）です。
   # ZIPファイルに含めるファイルは、ファイル名部分（basename）に重複がないようにしてください。
@@ -33,7 +33,8 @@ module ZipGenerator
   #   ZIPファイルに収録するエントリー名（つまり、ZIPファイル展開後のファイル名）は、パスのうちファイル名の部分（basename）です。
   # @param zip_path [String] 生成するZIPファイルのパスを指定します。
   # @param password [String] パスワードの文字列です。パスワード付きZIPファイルを作成する場合に指定します。
-  # @return [Pathname] 作成したZIPファイルのパスです。引数zip_pathで渡したものから生成したPathnameオブジェクトになります。
+  # @return [Integer] 新規作成したZIPファイルに書き込んだByte数です。
+  #   {https://docs.ruby-lang.org/ja/latest/class/IO.html#S_WRITE File#write}由来の値です。
   # @raise [FileBasenameDuplicationError] 引数archived_filepathsに指定したファイルパスの中に、
   #   ファイル名（basename）の重複がある場合に、発生する例外です。
   #   重複がある場合に、ZIPファイルを展開した際のファイル名をどうするのか考えるのが面倒なので、例外にしています。
@@ -42,17 +43,13 @@ module ZipGenerator
   # @raise [NotExistingDirError] 引数zip_pathに指定したファイルパスが、存在しないディレクトリを含んでいる場合に、
   #   発生する例外です。
   def self.zip_archive(archived_filepaths, zip_path, password: nil)
-    _zip_path = Pathname.new(zip_path)
-
-    if not FileTest.exist?(_zip_path.dirname)
-      raise NotExistingDirError.new(message="出力するZIPファイルに指定したファイルパスが、存在しないディレクトリを含んでいます", path: _zip_path)
+    if not FileTest.exist?(Pathname(zip_path).dirname)
+      raise NotExistingDirError.new(message="出力するZIPファイルに指定したファイルパスが、存在しないディレクトリを含んでいます", path: zip_path)
     end
 
     buffer = get_zip_buffer(archived_filepaths, password: password)
 
-    File.open(_zip_path, "wb") { |f| f.write(buffer.string) }
-
-    _zip_path
+    File.open(zip_path, "wb") { |f| f.write(buffer.string) }
   end
 
   # ZIPファイルをTempfileとして作成し、Tempfileオブジェクトを返します。オプション引数でパスワードを渡すと、パスワード付きZIPファイルを作成します
