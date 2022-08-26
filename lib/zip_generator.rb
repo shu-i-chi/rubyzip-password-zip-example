@@ -1,5 +1,6 @@
 require "zip"
 require "pathname"
+require "tempfile"
 
 require_relative "zip_generator/errors"
 require_relative "zip_generator/file_entry"
