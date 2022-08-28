@@ -52,7 +52,7 @@ module ZipGenerator
     File.open(zip_path, "wb") { |f| f.write(buffer.string) }
   end
 
-  # ZIPファイルをTempfileとして作成し、Tempfileオブジェクトを返します。オプション引数でパスワードを渡すと、パスワード付きZIPファイルを作成します
+  # ZIPファイルをTempfileとして作成し、Tempfileオブジェクトを返します。オプション引数でパスワードを渡すと、パスワード付きZIPファイルになります
   #
   # ZIPファイルに収録するエントリー名（つまり、ZIPファイル展開後のファイル名）は、パスのうちファイル名の部分（basename）です。
   # ZIPファイルに含めるファイルは、ファイル名部分（basename）に重複がないようにしてください。
@@ -63,7 +63,8 @@ module ZipGenerator
   # * ディスク上への永続化を目的としていないので、ファイル名を扱わない
   # * Tempfileオブジェクトを直接返す
   #
-  # {Zip::OutputStream.write_buffer}で得られるStringIOを直接使わずに、Tempfileとして取り回すモチベーションは、
+  # {https://www.rubydoc.info/gems/rubyzip/2.3.2/Zip/OutputStream#write_buffer-class_method Zip::OutputStream.write_buffer}で得られる
+  # StringIOを直接使わずに、Tempfileとして取り回すモチベーションは、
   # 例えば大量にZIPファイルを作成する場合などに、メモリ上にデータを持っておきたくない、というところにあります。
   #
   # @see https://docs.ruby-lang.org/ja/latest/class/Tempfile.html Tempfile（Rubyリファレンスマニュアル）
@@ -95,7 +96,7 @@ module ZipGenerator
     end
   end
 
-  # ZIPファイルのStringIOオブジェクトを生成して返します。オプション引数でパスワードを渡すと、パスワード付きZIPファイルを作成します
+  # ZIPファイルのStringIOオブジェクトを生成して返します。オプション引数でパスワードを渡すと、パスワード付きZIPファイルになります
   #
   # ZIPファイルに収録するエントリー名（つまり、ZIPファイル展開後のファイル名）は、パスのうちファイル名の部分（basename）です。
   # ZIPファイルに含めるファイルは、ファイル名部分（basename）に重複がないようにしてください。
