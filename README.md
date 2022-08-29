@@ -4,7 +4,6 @@
 `ZipGenerator`というモジュールを実装しています。
 
 実装したモジュール・メソッドの詳細は、[[Ruby] rubyzipでパスワード付きZIPファイル（良くないけど）を作成する（Zenn）](https://zenn.dev/shuichi/articles/ruby-rubyzip-password-zip)を確認してください。
-
 （リンク先で説明していますが、まずは[「そもそも**パスワード付きZIPファイルの使用は非推奨！**」](https://zenn.dev/shuichi/articles/ruby-rubyzip-password-zip#%E3%81%BE%E3%81%9A%E3%81%AF%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E4%BB%98%E3%81%8Dzip%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E4%BD%BF%E7%94%A8%E4%B8%AD%E6%AD%A2%E3%82%92%E6%A4%9C%E8%A8%8E%E3%81%97%E3%82%88%E3%81%86)ということをご認識ください。）
 
 ### このリポジトリでできること
@@ -38,6 +37,8 @@ Ruby 3.1.2, rubyzip 2.3で動作確認をしています。
 * [動作確認サンプルプログラムを実行する](#動作確認サンプルプログラムを実行する)
 
 * [YARDドキュメントを見るには](#yardドキュメントを見るには)
+
+  * [YARD gemを含めてデプロイし直したい場合](#yard-gemを含めてデプロイし直したい場合)
 
 * [ディレクトリ構成](#ディレクトリ構成)
 
@@ -88,6 +89,14 @@ $ bundle install
 
 * [bundle config（Bundler Docs）](https://bundler.io/man/bundle-config.1.html)
 
+```bash:.bundle/configに設定が書き込まれる様子
+$ bundle config set --local without 'development'
+
+$ cat .bundle/config
+---
+BUNDLE_WITHOUT: "development"
+```
+
 ## 動作確認サンプルプログラムを実行する
 
 example.rbというファイルが、`ZipGenerator`モジュールを使用するサンプルのプログラムになっています。
@@ -107,6 +116,9 @@ EXAMPLE 2. -- ZipGenerator.get_zip_tempfile
 EXAMPLE 3. -- ZipGenerator.zip_archive
  > ZIPファイル [ tmp/zipfile_file.zip ] を作成
  > パスワード付きZIPファイル [ tmp/zipfile_file_pw.zip ] を作成（パスワード：file）
+
+$ ls tmp/
+file_1  file_2  zipfile_buffer.zip  zipfile_buffer_pw.zip  zipfile_file.zip  zipfile_file_pw.zip  zipfile_tempfile.zip  zipfile_tempfile_pw.zip
 ```
 
 tmp/ディレクトリ配下にZIPファイルが作成されます。
@@ -114,6 +126,9 @@ tmp/ディレクトリ配下にZIPファイルが作成されます。
 ZIPファイルの解凍をしてみたり、example.rbのZIPファイルのパスワードを変更してみたり、エラーが出るようにしてみたりなどを試してみてください。
 
 ## YARDドキュメントを見るには
+
+（デプロイ時に、[YARDドキュメントを生成する場合](#YARDドキュメントを生成する場合)を選んでいる必要があります。
+もしそうでない場合は、[YARD gemを含めてデプロイし直したい場合](#yard-gemを含めてデプロイし直したい場合)の手順でYRAD gemをインストールしてください。）
 
 トップディレクトリで、以下のコマンドを実行します（まとめて`bundle exec yard doc && bundle exec yard server`でもいいです）。
 
@@ -131,6 +146,39 @@ Webブラウザで、[http://localhost:8808](http://localhost:8808)にアクセ�
 ### ポートを変更したい場合
 
 ポートを指定したい場合は、`bundle exec yard server -p <port番号>`のようにしてください。
+
+### YARD gemを含めてデプロイし直したい場合
+
+デプロイ時に[YARDドキュメントを生成しない場合](#YARDドキュメントを生成しない場合)の方を選択した場合は、`bundle config unset`でgemグループ除外設定を解除して、`bundle update`します：
+
+```bash
+$ bundle config unset --local without
+
+$ bundle update
+Fetching gem metadata from https://rubygems.org/...
+Resolving dependencies...
+Using bundler 2.3.7
+Using rubyzip 2.3.2
+Using webrick 1.7.0
+Using yard 0.9.28
+Bundle updated!
+
+$ bundle exec yard --version
+yard 0.9.28
+```
+
+（おまけ：.bundle/configの様子）
+
+```bash:.bundle/configから設定が消える様子
+$ cat .bundle/config
+---
+BUNDLE_WITHOUT: "development"
+
+$ bundle config unset --local without
+
+$ cat .bundle/config
+---
+```
 
 ## ディレクトリ構成
 
