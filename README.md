@@ -38,6 +38,8 @@ Ruby 3.1.2, rubyzip 2.3で動作確認をしています。
 
 * [YARDドキュメントを見るには](#yardドキュメントを見るには)
 
+  * [ポートを変更したい場合](#ポートを変更したい場合)
+
   * [YARD gemを含めてデプロイし直したい場合](#yard-gemを含めてデプロイし直したい場合)
 
 * [ディレクトリ構成](#ディレクトリ構成)
@@ -166,6 +168,8 @@ Bundle updated!
 $ bundle exec yard --version
 yard 0.9.28
 ```
+
+* [bundle config（Bundler Docs）](https://bundler.io/man/bundle-config.1.html)
 
 （おまけ：.bundle/configの様子）
 
