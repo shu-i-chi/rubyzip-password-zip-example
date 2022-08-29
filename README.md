@@ -1,7 +1,9 @@
 # rubyzip gemでパスワード付きZIPを作成する例
 
 [rubyzip gem](https://github.com/rubyzip/rubyzip)を使って、パスワードなし/付きZIPファイルを作成するモジュールの、サンプル実装です。
-詳細は、[[Ruby] rubyzipでパスワード付きZIPファイル（良くないけど）を作成する（Zenn）](https://zenn.dev/shuichi/articles/ruby-rubyzip-password-zip)を確認してください。
+`ZipGenerator`というモジュールを実装しています。
+
+実装したモジュール・メソッドの詳細は、[[Ruby] rubyzipでパスワード付きZIPファイル（良くないけど）を作成する（Zenn）](https://zenn.dev/shuichi/articles/ruby-rubyzip-password-zip)を確認してください。
 
 （リンク先で説明していますが、まずは[「そもそも**パスワード付きZIPファイルの使用は非推奨！**」](https://zenn.dev/shuichi/articles/ruby-rubyzip-password-zip#%E3%81%BE%E3%81%9A%E3%81%AF%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E4%BB%98%E3%81%8Dzip%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E4%BD%BF%E7%94%A8%E4%B8%AD%E6%AD%A2%E3%82%92%E6%A4%9C%E8%A8%8E%E3%81%97%E3%82%88%E3%81%86)ということをご認識ください。）
 
@@ -9,9 +11,15 @@
 
 * モジュールのサンプル実装の確認（lib/ディレクトリ配下）
 
-* 動作確認サンプルプログラムの実行（example.rb）
+  * `ZipGenerator`モジュールを実装しています
+
+* 動作確認サンプルプログラムの確認・実行（example.rb）
+
+  * `ZipGenerator`モジュールの使い方を確認できます
 
 * モジュールのYARDドキュメントの生成・閲覧
+
+  * メソッドの詳細を確認できます
 
 ### バージョン
 
