@@ -153,7 +153,7 @@ module ZipGenerator
   # # プライベートクラスメソッドにしたい場合は、コメントアウトを外す
   # private_class_method :get_zip_buffer
 
-  # {fileentry}の配列について、重複しているファイルパスの配列を返します。
+  # {FileEntry}の配列について、重複しているファイルパスの配列を返します。
   #
   # @param file_entries [Array<FileEntry>] {FileEntry}の配列です
   # @return [Array<String>]
